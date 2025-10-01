@@ -1,0 +1,23 @@
+{
+  "name": "arch-nvim-dev",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "args": { "UID": "1000", "GID": "1000" }
+  },
+  "workspaceFolder": "/workspace",
+  "containerUser": "dev",
+
+  "mounts": [
+    "source=${env:HOME}/.config/nvim,target=/home/dev/.config/nvim,type=bind,consistency=cached"
+  ],
+
+  "remoteEnv": {
+    "SHELL": "/bin/bash",
+    "EDITOR": "nvim"
+  },
+
+  "forwardPorts": [3000, 5173, 8000],
+  "postCreateCommand": "curl -fsSL https://raw.githubusercontent.com/Knot-Here/init-bruv/refs/heads/main/config/.tmux.conf -o $HOME/.tmux.conf || true && tmux -V || true && nvim --version | head -n 1"
+
+}
+
