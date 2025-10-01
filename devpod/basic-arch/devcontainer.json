@@ -8,16 +8,13 @@
   "containerUser": "dev",
 
   "mounts": [
-    "source=${env:HOME}/.config/nvim,target=/home/dev/.config/nvim,type=bind,consistency=cached"
+    "source=${env:HOME}/.config/nvim,target=/home/dev/.config/nvim,type=bind,consistency=cached",
+    "source=${env:HOME}/.ssh,target=/home/dev/.ssh,type=bind,consistency=cached"
   ],
 
-  "remoteEnv": {
-    "SHELL": "/bin/bash",
-    "EDITOR": "nvim"
-  },
+  "remoteEnv": { "SHELL": "/bin/bash", "EDITOR": "nvim" },
 
   "forwardPorts": [3000, 5173, 8000],
-  "postCreateCommand": "curl -fsSL https://raw.githubusercontent.com/Knot-Here/init-bruv/refs/heads/main/config/.tmux.conf -o $HOME/.tmux.conf || true && tmux -V || true && nvim --version | head -n 1"
 
+  "postCreateCommand": "chmod 700 ~/.ssh && chmod 600 ~/.ssh/* 2>/dev/null || true && ssh -T git@github.com || true && nvim --version | head -n 1"
 }
-
